@@ -1,0 +1,10 @@
+{
+  "generator_version": "v3",
+  "lot_records": 12000,
+  "buyer_lot_records": 55054,
+  "seed": 42,
+  "participation_rate": 0.3973734878482944,
+  "clearing_price_mean": 70521.866025,
+  "clearing_price_std": 52979.41219674101,
+  "dgp_notes": "Non-linear interactions: affinity*win_rate, region*affinity, (1-recency)*credit, step(win_rate>0.3)"
+}

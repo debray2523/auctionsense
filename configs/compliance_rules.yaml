@@ -1,0 +1,50 @@
+# AuctionSense — Compliance Rules Configuration
+# Configures sector-specific reserve price floor constraints and approval thresholds.
+# Edit this file to match your operator's requirements.
+
+sectors:
+
+  commercial_scrap:
+    description: "Commercial industrial scrap and recycling operators"
+    reserve_floor_pct_of_spot: 0.85          # Reserve must be >= 85% of commodity spot price
+    reserve_floor_pct_of_predicted: null     # No floor on predicted price
+    approval_required_above_value: null      # No approval threshold
+    re_auction_trigger: null                 # Operator discretion
+    compliance_note: "Standard commercial market reserve practice"
+
+  government_liquidation:
+    description: "Government agency and PSU asset liquidation"
+    reserve_floor_pct_of_spot: null
+    reserve_floor_pct_of_book_value: 0.50    # Reserve must be >= 50% of book value
+    approval_required_above_value: 5000000   # Committee approval required for lots > INR 50L
+    re_auction_trigger: "unsold"             # Mandatory re-auction if reserve not met
+    compliance_note: "Aligned with GFR 2017 guidelines for government disposal"
+
+  agricultural_commodity:
+    description: "Agricultural commodity auction platforms (tea, spices, grains)"
+    reserve_floor_pct_of_spot: 0.90          # Reserve must be >= 90% of market reference price
+    approval_required_above_value: null
+    re_auction_trigger: null
+    seasonal_adjustment: true               # System applies seasonal demand factors
+    compliance_note: "Aligned with APMC and commodity exchange guidance"
+
+  coal_resources:
+    description: "Coal and natural resource auction operators"
+    reserve_floor_pct_of_spot: 0.88
+    reserve_floor_pct_of_floor_price: 1.00  # Reserve must meet statutory floor price
+    approval_required_above_value: 10000000  # INR 1Cr approval threshold
+    re_auction_trigger: "unsold"
+    compliance_note: "Statutory floor price compliance required"
+
+  real_estate:
+    description: "Real estate auction operators"
+    reserve_floor_pct_of_assessed_value: 0.75
+    approval_required_above_value: null
+    re_auction_trigger: null
+    compliance_note: "Reserve floor set at 75% of professionally assessed value"
+
+# Global settings
+global:
+  default_sector: "commercial_scrap"
+  log_all_compliance_checks: true
+  require_human_approval_for_compliance_flags: true
