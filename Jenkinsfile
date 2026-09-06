@@ -11,10 +11,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'python --version'
-                bat 'if exist requirements.txt pip install -r requirements.txt'
-                bat 'if exist tests (python -m pytest tests) else (echo No tests folder yet)'
+                bat 'python -m venv .venv'
+                bat '.venv\\Scripts\\python -m pip install --quiet --upgrade pip'
+                bat '.venv\\Scripts\\python -m pip install --quiet -r requirements.txt'
+                bat '.venv\\Scripts\\python -m pytest tests --junitxml=results.xml'
             }
+            post { always { junit allowEmptyResults: true, testResults: 'results.xml' } }
         }
         stage('Deploy to UAT') {
             when { anyOf { branch 'release/*'; branch 'hotfix/*' } }
